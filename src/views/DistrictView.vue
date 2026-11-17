@@ -132,6 +132,6 @@ const caution = [
       </ul>
     </section>
 
-    <MemoBox :how="how" :caution="caution" v-if-"isDev" />
+    <MemoBox :how="how" :caution="caution" v-if="isDev" />
   </div>
 </template>

@@ -104,6 +104,6 @@ const actualText = KEYS.map(k => `${CAND[k].short} ${ACTUAL[k]}%`).join('、')
       <ul><li v-for="(n, i) in META.notes" :key="i">{{ n }}</li></ul>
     </section>
 
-    <MemoBox :how="how" :caution="caution" v-if-"isDev" />
+    <MemoBox :how="how" :caution="caution" v-if="isDev" />
   </div>
 </template>
