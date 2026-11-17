@@ -1,0 +1,44 @@
+<script setup>
+// 100% 堆疊長條圖：rows = [{label, n, pct:{chiang, chen, huang, und}}]
+import { ref, watch, onMounted } from 'vue'
+import * as d3 from 'd3'
+import { CAND } from '../data/polls'
+
+const props = defineProps({ rows: { type: Array, required: true } })
+const el = ref(null)
+const SEG = [
+  { k: 'chiang', name: CAND.chiang.name, color: CAND.chiang.color },
+  { k: 'chen', name: CAND.chen.name, color: CAND.chen.color },
+  { k: 'huang', name: CAND.huang.name, color: CAND.huang.color },
+  { k: 'und', name: '未表態（未決定＋不知道）', color: 'var(--mute)' }
+]
+
+function draw() {
+  const svg = d3.select(el.value); svg.selectAll('*').remove()
+  const W = 920, rh = 38, m = { t: 6, r: 10, b: 28, l: 190 }, H = m.t + m.b + props.rows.length * rh
+  svg.attr('viewBox', `0 0 ${W} ${H}`)
+  const x = d3.scaleLinear().domain([0, 100]).range([m.l, W - m.r])
+  const y = d3.scaleBand().domain(props.rows.map(r => r.label)).range([m.t, H - m.b]).padding(0.22)
+  props.rows.forEach(r => {
+    let acc = 0
+    const total = SEG.reduce((s, g) => s + r.pct[g.k], 0)
+    SEG.forEach(g => {
+      const v = (r.pct[g.k] / total) * 100
+      svg.append('rect').attr('x', x(acc)).attr('y', y(r.label)).attr('width', Math.max(x(acc + v) - x(acc), 0)).attr('height', y.bandwidth())
+        .attr('fill', g.color).attr('fill-opacity', g.k === 'und' ? 0.55 : 0.9)
+        .append('title').text(`${r.label}（n=${r.n}）\n${g.name}：${r.pct[g.k].toFixed(1)}%`)
+      if (v >= 7) svg.append('text').attr('x', (x(acc) + x(acc + v)) / 2).attr('y', y(r.label) + y.bandwidth() / 2 + 4)
+        .attr('text-anchor', 'middle').style('fill', '#fff').style('font-size', '12px').style('font-weight', 600)
+        .style('stroke', 'rgba(0,0,0,.45)').style('stroke-width', 2.5).style('paint-order', 'stroke').text(r.pct[g.k].toFixed(1))
+      acc += v
+    })
+    svg.append('text').attr('x', m.l - 8).attr('y', y(r.label) + y.bandwidth() / 2 + 4).attr('text-anchor', 'end')
+      .style('fill', 'var(--fg)').text(`${r.label}${r.n < 50 ? '＊' : ''}（n=${r.n}）`)
+  })
+  svg.append('g').selectAll('text').data([0, 25, 50, 75, 100]).join('text')
+    .attr('x', x).attr('y', H - 8).attr('text-anchor', 'middle').text(d => d + '%')
+}
+onMounted(draw); watch(() => props.rows, draw)
+</script>
+
+<template><svg ref="el" role="img" aria-label="百分比堆疊長條圖"></svg></template>
