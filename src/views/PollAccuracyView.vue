@@ -7,6 +7,7 @@ import BarChart from '../components/BarChart.vue'
 import DotChart from '../components/DotChart.vue'
 import MemoBox from '../components/MemoBox.vue'
 
+const isDev = import.meta.env.DEV
 const mode = ref('norm')
 const rows = computed(() => buildRows(mode.value))
 const sorted = computed(() => [...rows.value].sort((a, b) => a.mae - b.mae))
@@ -103,6 +104,6 @@ const actualText = KEYS.map(k => `${CAND[k].short} ${ACTUAL[k]}%`).join('、')
       <ul><li v-for="(n, i) in META.notes" :key="i">{{ n }}</li></ul>
     </section>
 
-    <MemoBox :how="how" :caution="caution" />
+    <MemoBox :how="how" :caution="caution" v-if-"isDev" />
   </div>
 </template>

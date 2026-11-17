@@ -7,6 +7,7 @@ import DistrictMap from '../components/DistrictMap.vue'
 import StackedBars from '../components/StackedBars.vue'
 import MemoBox from '../components/MemoBox.vue'
 
+const isDev = import.meta.env.DEV
 const title = '行政區選票基本盤與民調空間分異的對比'
 const geo = ref(null)   // 若有 public/data/taipei-districts.geojson 則載入真實邊界
 onMounted(async () => {
@@ -131,6 +132,6 @@ const caution = [
       </ul>
     </section>
 
-    <MemoBox :how="how" :caution="caution" />
+    <MemoBox :how="how" :caution="caution" v-if-"isDev" />
   </div>
 </template>

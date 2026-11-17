@@ -38,8 +38,10 @@ export const swing = r => (r.pct.und * r.n) / (OVERALL.und * N) * 100
 // TVBS 民調中心歷次台北市長民調的年齡層交叉分析（取自新聞報導，僅列有報導數字的點）
 export const TREND_X = ['8/29', '10/2', '11/1', '11/15']
 export const TREND = [
-  { name: '20–29 歲：黃珊珊', color: 'var(--c3)', dash: null, y: [33, 35, 43, 56] },
   { name: '20–29 歲：蔣萬安', color: 'var(--c1)', dash: null, y: [28, null, 21, 16] },
+  { name: '30–39 歲：蔣萬安', color: 'var(--c1)', dash: '6 4', y: [17, 28, 32, 31] },
   { name: '20–29 歲：陳時中', color: 'var(--c2)', dash: null, y: [33, null, 21, 20] },
+  { name: '30–39 歲：陳時中', color: 'var(--c2)', dash: '6 4', y: [null, 20, 32, 25] },
+  { name: '20–29 歲：黃珊珊', color: 'var(--c3)', dash: null, y: [33, 35, 43, 56] },
   { name: '30–39 歲：黃珊珊', color: 'var(--c3)', dash: '6 4', y: [47, 47, 28, 31] }
 ]

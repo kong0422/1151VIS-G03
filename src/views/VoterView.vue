@@ -7,6 +7,7 @@ import SwingBars from '../components/SwingBars.vue'
 import TrendLines from '../components/TrendLines.vue'
 import MemoBox from '../components/MemoBox.vue'
 
+const isDev = import.meta.env.DEV
 const title = '選民結構交叉分析與「潛在動搖票」定位'
 const dimKey = ref('age')
 const dim = computed(() => DIMS.find(d => d.key === dimKey.value))
@@ -29,7 +30,7 @@ const caution = [
   '三張交叉分析圖都來自同一份民調（台灣民意基金會，11/5–7，n=1,069）。它的整體未表態比例是 21.1%，與後來封關時的民調不同；趨勢圖才是跨時間的資料。',
   '分組後樣本會變很少（例如 20–24 歲只有 63 人、時代力量支持者只有 32 人），誤差遠大於全體的 ±3 點，看到 65.6% 這類極端數字時要特別保守。',
   '「未表態」包含「還不能決定」與「不知道」，不等於一定會變心：有些人最後可能不去投票，或投給原本傾向的人。這裡只能說他們「尚未決定」，不能預測流向。',
-  '趨勢圖來自新聞報導整理，只列出有報導數字的時點（10/2 的 20–29 歲蔣、陳數字沒有找到）；各期 20–29 歲子樣本很小，週與週之間大幅擺盪有一部分可能只是抽樣誤差。',
+  '趨勢圖來自新聞報導整理，只列出有報導數字的時點（10/2 的 20–29 歲蔣、陳，以及 8/29 的 30–39 歲陳時中，報導中沒有數字，圖上留空）；各期 20–29 歲子樣本很小，週與週之間大幅擺盪有一部分可能只是抽樣誤差。',
   '不同機構對同一年齡層的結果差很多：30–39 歲對黃珊珊的支持度，TVBS 封關民調約 31%，自由時報封關前民調約 44%。這代表「年輕族群動向」的測量本身就不穩定。',
   '黃珊珊在民調中的支持度，高於最終開票的 25.1%；這可能和年輕選民投票率、策略投票等因素有關，但本頁資料無法驗證，請視為待檢驗的假設而不是結論。'
 ]
@@ -69,7 +70,7 @@ const caution = [
 
     <section class="card">
       <h2>支持傾向的轉變：TVBS 年齡層趨勢</h2>
-      <p class="sub">20–29 歲對黃珊珊的支持度從 33% 一路升到封關前的 56%；30–39 歲則在 11/1 一度大幅下滑。</p>
+      <p class="sub">20–29 歲對黃珊珊的支持度從 33% 一路升到封關前的 56%；30–39 歲對黃珊珊則在 11/1 大幅下滑，同期蔣萬安、陳時中回升。</p>
       <TrendLines />
     </section>
 
@@ -84,6 +85,6 @@ const caution = [
       </ul>
     </section>
 
-    <MemoBox :how="how" :caution="caution" />
+    <MemoBox :how="how" :caution="caution" v-if-"isDev" />
   </div>
 </template>
