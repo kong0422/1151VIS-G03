@@ -75,7 +75,7 @@ const caution = [
     </section>
 
     <section class="card">
-      <h2>解讀</h2>
+      <h2>備註</h2>
       <ul>
         <li><b>最大的動搖票是中性選民。</b>沒特別支持任何政黨的選民未表態比例高達 {{ neutral.pct.und.toFixed(0) }}%，貢獻了全體未表態者的 {{ swing(neutral).toFixed(0) }}%；已決定者中，他們略偏向黃珊珊（{{ neutral.pct.huang.toFixed(1) }}%）。</li>
         <li><b>政黨傾向決定了大半的票。</b>民進黨、國民黨支持者分別有 72.8%、84.2% 挺自家候選人；民眾黨支持者有 59.4% 挺黃、28.0% 挺蔣，是兩人爭奪的對象。</li>

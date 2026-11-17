@@ -100,7 +100,7 @@ const actualText = KEYS.map(k => `${CAND[k].short} ${ACTUAL[k]}%`).join('、')
     </section>
 
     <section class="card">
-      <h2>解讀與限制</h2>
+      <h2>備註</h2>
       <ul><li v-for="(n, i) in META.notes" :key="i">{{ n }}</li></ul>
     </section>
 

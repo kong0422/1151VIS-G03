@@ -123,7 +123,7 @@ const caution = [
     </section>
 
     <section class="card">
-      <h2>解讀</h2>
+      <h2>備註</h2>
       <ul>
         <li>實際開票：蔣萬安在 11 區領先，陳時中只贏大同區（士林區僅差 439 票），黃珊珊沒有任何一區第一。</li>
         <li>民調領先者與實際不同的區：{{ DISTRICTS.filter(d => d.pollLeader !== d.leader).map(d => d.name).join('、') }}。</li>
