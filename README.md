@@ -1,22 +1,15 @@
-# 民調預測準確度與「封關落差」分析— 2022 台北市長（Vue 3 + D3.js）
+# 民調預測準確度與分析— 2022 台北市長
 
-## 執行
-```bash
-npm install
-npm run dev      # 開發
-npm run build    # 打包到 dist/
-```
+資料分析與視覺化應用 
+小組成員｜415085085吳偉臣 / 415085097黃宏霖 / 413085108張亦筠
+GitHub 專案：[https://github.com/kong0422/1151VIS-G03](https://github.com/kong0422/1151VIS-G03)  
+線上展示：[https://kong0422.github.io/1151VIS-G03/](https://kong0422.github.io/1151VIS-G03/)
 
-## 結構
-- `src/data/polls.js`：民調與實際開票資料
-- `src/utils/stats.js`：誤差、MAE、賴侯差距誤差計算
-- `src/components/DotChart.vue`：誤差散佈圖
-- `src/components/BarChart.vue`：分組長條圖
-- `src/App.vue`：header／main／footer 
-- `src/views/`：三個分頁（PollAccuracyView、DistrictView、VoterView）
-- `src/router/index.js`：路由與分頁清單
+> 民調預測準確度與分析— 2022 台北市長
+> 
 
-實際得票率請自行對照中選會公布數字確認。
+## 目錄
+- [資料來源](#資料來源)
 
 ## 資料來源
 
@@ -29,14 +22,13 @@ npm run build    # 打包到 dist/
 - 鏡傳媒：https://www.mirrormedia.mg/story/20221127pol007
 
 ### 第 2 頁：行政區選票基本盤與民調空間分異
-各區實際開票（得票數）：ETtoday 2022 九合一選舉專區。https://media.ettoday.net/events/election2022/mayor
-各區民調（樣本數與各候選人百分比）：台灣民意基金會 2022-11-10 記者會書面資料（11/5–7 訪問）。https://www.tpof.org/wp-content/uploads/2022/11/20221110-TPOF-%E8%A8%98%E8%80%85%E6%9C%83%E6%9B%B8%E9%9D%A2%E8%B3%87%E6%96%99.pdf
-各區領先者的初步版本：ETtoday 報導。https://www.ettoday.net/news/20221111/2377778.htm，後來被上面的 PDF 取代。
+- 各區實際開票（得票數）：ETtoday 2022 九合一選舉專區。https://media.ettoday.net/events/election2022/mayor
+- 各區民調（樣本數與各候選人百分比）：台灣民意基金會 2022-11-10 記者會書面資料（11/5–7 訪問）。https://www.tpof.org/wp-content/uploads/2022/11/20221110-TPOF-%E8%A8%98%E8%80%85%E6%9C%83%E6%9B%B8%E9%9D%A2%E8%B3%87%E6%96%99.pdf
 
 ### 第 3 頁：選民結構交叉分析與「潛在動搖票」
-性別、年齡、教育、政黨傾向的交叉表，以及全體未表態比例：同樣是上面那份台灣民意基金會 PDF（n=1,069）。
-TVBS 年齡層趨勢（8/29、10/2、11/1、11/15）：整理自 TVBS 民調的新聞報導。
-8/29：新頭殼 https://newtalk.tw/news/view/2022-08-29/808719
-11/1：新頭殼 https://newtalk.tw/news/view/2022-11-01/840640
-11/15：TVBS 新聞網 https://news.tvbs.com.tw/politics/1963187
-10/2：沒有找到單獨的報導，數字是 11/1 報導中「較 10/2 上升或下降」的對照值。
+- 性別、年齡、教育、政黨傾向的交叉表，以及全體未表態比例：同樣是上面那份台灣民意基金會 PDF（n=1,069）。
+- TVBS 年齡層趨勢（8/29、10/2、11/1、11/15）：整理自 TVBS 民調的新聞報導。
+- 8/29：新頭殼 https://newtalk.tw/news/view/2022-08-29/808719
+- 11/1：新頭殼 https://newtalk.tw/news/view/2022-11-01/840640
+- 11/15：TVBS 新聞網 https://news.tvbs.com.tw/politics/1963187
+- 10/2：沒有找到單獨的報導，數字是 11/1 報導中「較 10/2 上升或下降」的對照值。

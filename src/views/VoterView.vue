@@ -57,15 +57,15 @@ const caution = [
     </section>
 
     <section class="card">
-      <h2>熱力圖：族群 × 候選人支持度</h2>
-      <p class="sub">顏色越深＝比例越高；＊＝樣本數少於 50。</p>
-      <Heatmap :groups="heatGroups" />
-    </section>
-
-    <section class="card">
       <h2>潛在動搖票定位：誰貢獻了最多的未表態者？</h2>
       <p class="sub">目前分類：{{ dim.label }}（可用上方「百分比堆疊長條圖」的分頁切換）。長度＝佔全體未表態者的比例。</p>
       <SwingBars :rows="swingRows" />
+    </section>
+
+    <section class="card">
+      <h2>熱力圖：族群 × 候選人支持度</h2>
+      <p class="sub">顏色越深＝比例越高；＊＝樣本數少於 50。</p>
+      <Heatmap :groups="heatGroups" />
     </section>
 
     <section class="card">
