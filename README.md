@@ -1,9 +1,9 @@
 # 民調預測準確度與分析— 2022 台北市長
 
-資料分析與視覺化應用 
-小組成員｜415085085吳偉臣 / 415085097黃宏霖 / 413085108張亦筠
-GitHub 專案：[https://github.com/kong0422/1151VIS-G03](https://github.com/kong0422/1151VIS-G03)  
-線上展示：[https://kong0422.github.io/1151VIS-G03/](https://kong0422.github.io/1151VIS-G03/)
+資料分析與視覺化應用  
+小組成員｜415085085吳偉臣 / 415085097黃宏霖 / 413085108張亦筠   
+GitHub 專案：[https://github.com/kong0422/1151VIS-G03](https://github.com/kong0422/1151VIS-G03)   
+線上展示：[https://kong0422.github.io/1151VIS-G03/](https://kong0422.github.io/1151VIS-G03/)   
 
 > 民調預測準確度與分析— 2022 台北市長
 > 
