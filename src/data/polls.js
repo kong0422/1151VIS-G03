@@ -31,6 +31,6 @@ export const POLLS = [
 
 export const META = {
   title: '民調預測準確度與「封關落差」分析',
-  subtitle: '2022 台北市長選舉（三腳督）｜比較封關前各家最後一次公布的民調與實際開票結果',
+  subtitle: '2022 台北市長選舉｜比較封關前各家最後一次公布的民調與實際開票結果',
   marginLabel: '蔣陳差距誤差'
 }
