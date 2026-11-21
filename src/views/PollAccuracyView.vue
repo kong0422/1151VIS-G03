@@ -48,26 +48,27 @@ const actualText = KEYS.map(k => `${CAND[k].short} ${ACTUAL[k]}%`).join('、')
     </section>
 
     <section class="card">
-      <h2>誤差散佈圖：預測得票率 − 實際得票率</h2>
+      <h2>預測得票率 − 實際得票率</h2>
       <p class="sub">依平均絕對誤差排序；正值＝高估、負值＝低估。</p>
       <div class="legend"><span v-for="k in KEYS" :key="k"><i :style="{ background: CAND[k].color }"></i>{{ CAND[k].name }}</span></div>
       <DotChart :rows="sorted" />
     </section>
 
     <section class="card">
-      <h2>分組長條圖：各家封關民調 vs 實際開票</h2>
+      <h2>各家封關民調 vs 實際開票</h2>
       <p class="sub">最右側深框長條為實際開票結果。</p>
       <BarChart :rows="rows" />
     </section>
 
     <section class="card scroll">
-      <h2>明細</h2>
+      <h2>誤差排名</h2>
       <table>
         <thead>
           <tr>
             <th>排名</th><th>民調機構</th><th>訪問／公布日期</th>
             <template v-for="k in KEYS" :key="k"><th>{{ CAND[k].short }} 民調</th><th>{{ CAND[k].short }} 誤差</th></template>
-            <th>MAE</th><th>{{ META.marginLabel }}</th>
+            <th>MAE</th>
+            <!-- <th>{{ META.marginLabel }}</th> -->
           </tr>
         </thead>
         <tbody>
@@ -78,11 +79,12 @@ const actualText = KEYS.map(k => `${CAND[k].short} ${ACTUAL[k]}%`).join('、')
               <td :class="signClass(r.err[k])">{{ fmt(r.err[k]) }}</td>
             </template>
             <td><b>{{ r.mae.toFixed(2) }}</b></td>
-            <td :class="signClass(r.marginErr)">{{ fmt(r.marginErr) }}</td>
+            <!-- <td :class="signClass(r.marginErr)">{{ fmt(r.marginErr) }}</td> -->
           </tr>
         </tbody>
       </table>
-      <p class="note">單位：百分點（pp）。{{ META.marginLabel }}＝民調的蔣−陳差距，減去實際差距 {{ actualMargin.toFixed(2) }} pp。</p>
+      <p class="note">依平均絕對誤差（MAE）由小到大排序；單位：百分點（pp）。</p>
+      <!-- <p class="note">依平均絕對誤差（MAE）由小到大排序；單位：百分點（pp）。{{ META.marginLabel }}＝民調的蔣−陳差距，減去實際差距 {{ actualMargin.toFixed(2) }} pp。</p> -->
     </section>
 
     <section class="card">

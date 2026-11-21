@@ -36,7 +36,7 @@ const youngTop = DIMS.find(d => d.key === 'age').rows.filter(r => r.n >= 100).so
     </section>
 
     <section class="card">
-      <h2>百分比堆疊長條圖：各族群的支持比例結構</h2>
+      <h2>各族群的支持比例結構</h2>
       <div class="tabs"><button v-for="d in DIMS" :key="d.key" :class="{ on: dimKey === d.key }" @click="dimKey = d.key">{{ d.label }}</button></div>
       <Stacked100 :rows="dim.rows" />
     </section>
@@ -48,7 +48,7 @@ const youngTop = DIMS.find(d => d.key === 'age').rows.filter(r => r.n >= 100).so
     </section>
 
     <section class="card">
-      <h2>熱力圖：族群 × 候選人支持度</h2>
+      <h2>族群 × 候選人支持度</h2>
       <p class="sub">顏色越深＝比例越高；＊＝樣本數少於 50。</p>
       <Heatmap :groups="heatGroups" />
     </section>

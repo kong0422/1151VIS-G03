@@ -70,7 +70,7 @@ const f = v => (v > 0 ? '+' : '') + v.toFixed(1)
     </section>
 
     <section class="card">
-      <h2>雙圖並列：民調推估 vs 實際開票</h2>
+      <h2>民調推估 vs 實際開票</h2>
       <p class="sub">{{ geo ? '' : '目前為示意方塊圖（位置大致依地理方位排列，非真實邊界）。' }}切換下方選項可改看各候選人的得票率分佈。</p>
       <div class="tabs"><button v-for="m in modes" :key="m.k" :class="{ on: mode === m.k }" @click="mode = m.k">{{ m.t }}</button></div>
       <div class="legend"><span v-for="k in KEYS" :key="k"><i :style="{ background: CAND[k].color }"></i>{{ CAND[k].name }}</span></div>
@@ -81,13 +81,13 @@ const f = v => (v > 0 ? '+' : '') + v.toFixed(1)
     </section>
 
     <section class="card">
-      <h2>各行政區實際得票率（依蔣萬安得票率排序）</h2>
+      <h2>各行政區實際得票率</h2>
       <p class="sub">藍營傳統優勢區（文山、大安）與綠營較強區（大同、士林）的基本盤差異。</p>
       <StackedBars :rows="rows" />
     </section>
 
     <section class="card scroll">
-      <h2>明細：民調推估 vs 實際（三人合計＝100%）</h2>
+      <h2>民調領先 vs 實際領先</h2>
       <table>
         <thead>
           <tr><th>行政區</th><th>民調 n</th><th>±</th>
@@ -101,11 +101,12 @@ const f = v => (v > 0 ? '+' : '') + v.toFixed(1)
               <td>{{ d.pollShare[k].toFixed(1) }}%</td><td>{{ d.share[k].toFixed(1) }}%</td>
               <td :class="d.pollShare[k] - d.share[k] > 0 ? 'pos' : 'neg'">{{ f(d.pollShare[k] - d.share[k]) }}</td>
             </template>
-            <td :class="d.pollLeader === d.leader ? '' : 'pos'">{{ CAND[d.pollLeader].short }}</td><td>{{ CAND[d.leader].short }}</td>
+            <td><span class="chip" :class="[d.pollLeader, { miss: d.pollLeader !== d.leader }]" :title="d.pollLeader !== d.leader ? '民調領先者與實際不同' : ''">{{ CAND[d.pollLeader].short }}</span></td>
+            <td><span class="chip" :class="d.leader">{{ CAND[d.leader].short }}</span></td>
           </tr>
         </tbody>
       </table>
-      <p class="note">單位：百分點（pp）。民調為台灣民意基金會 11/5–7 各區結果（含未決定者）換算為三人合計 100%。</p>
+      <p class="note">單位：百分點（pp）。「民調領先」「實際領先」以候選人顏色的文字標示；民調領先者與實際不同時，文字外圍會加橘色虛線框。</p>
     </section>
 
     <section class="card">
