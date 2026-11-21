@@ -14,32 +14,32 @@ h1{font-size:22px;margin:0 0 4px}h2{font-size:17px;margin:0 0 4px}
 svg{width:100%;height:auto;display:block}
 svg text{fill:var(--mute);font-size:12px}
 .scroll{overflow-x:auto}
-table{border-collapse:collapse;width:100%;min-width:720px;font-size:13px}
+table{border-collapse:collapse;width:100%;min-width:720px;}
 th,td{padding:7px 8px;text-align:right;border-bottom:1px solid var(--line);white-space:nowrap}
 th:nth-child(-n+3),td:nth-child(-n+3){text-align:left}
 th{color:var(--mute);font-weight:500}
 .pos{color:var(--bad)}.neg{color:var(--neg)}
 .kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}
 .kpi{border:1px solid var(--line);border-radius:10px;padding:10px 12px}
-.kpi b{font-size:20px;display:block}.kpi span{font-size:12px;color:var(--mute)}
+.kpi b{font-size:120%;display:block}.kpi span{font-size:95%;color:var(--mute)}
 ul{margin:6px 0 0;padding-left:20px}li{margin:3px 0}
-.note{font-size:12px;color:var(--mute)}
+.note{font-size:90%;color:var(--mute)}
 
 /* ===== header / footer / 分頁 ===== */
 #app{min-height:100vh;display:flex;flex-direction:column}
 main{width:100%;flex:1}
 .site-header{background:var(--card);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:10}
 .site-header nav{max-width:1000px;margin:0 auto;padding:0 16px;display:flex;gap:4px;overflow-x:auto}
-.site-header a{color:var(--mute);text-decoration:none;font-size:14px;padding:12px 12px;white-space:nowrap;border-bottom:2px solid transparent}
+.site-header a{color:var(--mute);text-decoration:none;font-size:100%;padding:12px 12px;white-space:nowrap;border-bottom:2px solid transparent}
 .site-header a:hover{color:var(--fg)}
 .site-header a.router-link-exact-active{color:var(--fg);font-weight:600;border-bottom-color:var(--fg)}
-.site-footer{border-top:1px solid var(--line);background:var(--card);color:var(--mute);text-align:center;font-size:13px;padding:14px 16px}
+.site-footer{border-top:1px solid var(--line);background:var(--card);color:var(--mute);text-align:center;font-size:90%;padding:14px 16px}
 .placeholder{color:var(--mute);text-align:center;padding:60px 16px}
 
 /* ===== 面量圖雙圖並列 ===== */
 .maps{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px}
 .maps figure{margin:0}
-.maps figcaption{font-size:13px;color:var(--mute);margin-bottom:4px;text-align:center}
+.maps figcaption{font-size:95%;color:var(--mute);margin-bottom:4px;text-align:center}
 
 /* ===== 備忘區 ===== */
 .memo{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--c3);border-radius:12px;padding:14px 18px;margin-top:8px}
@@ -47,14 +47,14 @@ main{width:100%;flex:1}
 .memo h3{font-size:14px;margin:10px 0 2px;color:var(--mute)}
 .memo li{font-size:13.5px}
 .tabs{display:inline-flex;flex-wrap:wrap;border:1px solid var(--line);border-radius:8px;overflow:hidden;margin:4px 0 10px}
-.tabs button{border:0;background:transparent;color:var(--fg);padding:6px 14px;cursor:pointer;font:inherit;font-size:13px}
+.tabs button{border:0;background:transparent;color:var(--fg);padding:6px 14px;cursor:pointer;font:inherit;font-size:95%}
 .tabs button.on{background:var(--fg);color:var(--bg)}
 .trend-legend{align-items:center}
-.lg-item{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);background:transparent;color:var(--fg);border-radius:999px;padding:3px 12px 3px 8px;font:inherit;font-size:13px;cursor:pointer}
+.lg-item{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);background:transparent;color:var(--fg);border-radius:999px;padding:3px 12px 3px 8px;font:inherit;font-size:95%;cursor:pointer}
 .lg-item:hover{border-color:var(--fg)}
 .lg-item.off{opacity:.4;text-decoration:line-through}
 .lg-item svg{width:30px;height:10px}
-.lg-link{border:0;background:transparent;color:var(--mute);font:inherit;font-size:12px;text-decoration:underline;cursor:pointer;padding:0 4px}
+.lg-link{border:0;background:transparent;color:var(--mute);font:inherit;font-size:90%;text-decoration:underline;cursor:pointer;padding:0 4px}
 
 /* ===== 領先者標籤（文字上色，不加底色） ===== */
 :root{--c3t:#a87c00}
