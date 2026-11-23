@@ -5,7 +5,6 @@ import { KEYS, CAND, ACTUAL, META } from '../data/polls'
 import { buildRows, fmt, signClass, actualMargin } from '../utils/stats'
 import BarChart from '../components/BarChart.vue'
 import DotChart from '../components/DotChart.vue'
-import MemoBox from '../components/MemoBox.vue'
 
 const isDev = import.meta.env.DEV
 const mode = ref('norm')

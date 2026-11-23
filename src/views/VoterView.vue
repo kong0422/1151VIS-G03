@@ -5,7 +5,6 @@ import Stacked100 from '../components/Stacked100.vue'
 import Heatmap from '../components/Heatmap.vue'
 import SwingBars from '../components/SwingBars.vue'
 import TrendLines from '../components/TrendLines.vue'
-import MemoBox from '../components/MemoBox.vue'
 
 const isDev = import.meta.env.DEV
 const title = '選民結構交叉分析與「潛在動搖票」定位'

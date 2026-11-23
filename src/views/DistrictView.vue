@@ -5,7 +5,6 @@ import { KEYS, CAND } from '../data/polls'
 import { DISTRICTS } from '../data/districts'
 import DistrictMap from '../components/DistrictMap.vue'
 import StackedBars from '../components/StackedBars.vue'
-import MemoBox from '../components/MemoBox.vue'
 
 const isDev = import.meta.env.DEV
 const title = '行政區選票基本盤與民調空間分異的對比'
@@ -83,6 +82,7 @@ const f = v => (v > 0 ? '+' : '') + v.toFixed(1)
     <section class="card">
       <h2>各行政區實際得票率</h2>
       <p class="sub">藍營傳統優勢區（文山、大安）與綠營較強區（大同、士林）的基本盤差異。</p>
+      <div class="legend"><span v-for="k in KEYS" :key="k"><i :style="{ background: CAND[k].color }"></i>{{ CAND[k].name }}</span></div>
       <StackedBars :rows="rows" />
     </section>
 
