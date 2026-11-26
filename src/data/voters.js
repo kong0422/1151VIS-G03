@@ -35,13 +35,16 @@ export const DIMS = [
 // 「佔全體未表態者的比例」＝該群體未表態人數 ÷ 全體未表態人數
 export const swing = r => (r.pct.und * r.n) / (OVERALL.und * N) * 100
 
-// TVBS 民調中心歷次台北市長民調的年齡層交叉分析（取自新聞報導，僅列有報導數字的點）
-export const TREND_X = ['8/29', '10/2', '11/1', '11/15']
+// TVBS 民調中心歷次台北市長民調的年齡層交叉分析（有投票意願者）
+// 8/26、10/2：取自 TVBS 原始報告 PDF 表 2-1（10/2 這波訪問時間為 9/29–10/2）
+//   https://cc.tvbs.com.tw/portal/file/poll_center/2022/20221004/077c771c5fb55fda6ef652a0716b118a.pdf
+// 11/1、11/15：取自新聞報導（日期為報導日期，未核對訪問日期）
+export const TREND_X = ['8/26', '10/2', '11/1', '11/15']
 export const TREND = [
-  { name: '20–29 歲：蔣萬安', color: 'var(--c1)', dash: null, y: [28, null, 21, 16] },
-  { name: '30–39 歲：蔣萬安', color: 'var(--c1)', dash: '6 4', y: [17, 28, 32, 31] },
-  { name: '20–29 歲：陳時中', color: 'var(--c2)', dash: null, y: [33, null, 21, 20] },
-  { name: '30–39 歲：陳時中', color: 'var(--c2)', dash: '6 4', y: [null, 20, 32, 25] },
   { name: '20–29 歲：黃珊珊', color: 'var(--c3)', dash: null, y: [33, 35, 43, 56] },
-  { name: '30–39 歲：黃珊珊', color: 'var(--c3)', dash: '6 4', y: [47, 47, 28, 31] }
+  { name: '20–29 歲：蔣萬安', color: 'var(--c1)', dash: null, y: [28, 27, 21, 16] },
+  { name: '20–29 歲：陳時中', color: 'var(--c2)', dash: null, y: [33, 24, 21, 20] },
+  { name: '30–39 歲：黃珊珊', color: 'var(--c3)', dash: '6 4', y: [47, 47, 28, 31] },
+  { name: '30–39 歲：蔣萬安', color: 'var(--c1)', dash: '6 4', y: [17, 28, 32, 31] },
+  { name: '30–39 歲：陳時中', color: 'var(--c2)', dash: '6 4', y: [25, 20, 32, 25] }
 ]
