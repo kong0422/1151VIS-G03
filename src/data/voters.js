@@ -32,6 +32,23 @@ export const DIMS = [
     row('沒特別支持哪一黨（中性）', 310, [9.8, 17.0, 27.1, 28.3, 17.8])] }
 ]
 
+// 樣本過少的政黨傾向分類，歸併為「其它政黨支持者」（潛在動搖票圖使用，明細顯示在 tooltip）
+// 來源同上：TPOF 交叉表「政黨支持」；未列入的 4 類合計 68 人
+const otherParts = [
+  row('台灣基進', 18, [78.0, 0.0, 17.6, 0.0, 4.5]),
+  row('親民黨', 12, [10.2, 48.7, 25.6, 10.4, 5.1]),
+  row('其他政黨', 21, [8.5, 24.6, 21.9, 20.2, 24.8]),
+  row('政黨傾向回答「不知道」', 17, [7.6, 13.5, 3.0, 28.4, 47.5])
+]
+const nOther = otherParts.reduce((a, p) => a + p.n, 0)
+const wavg = k => +(otherParts.reduce((a, p) => a + p.pct[k] * p.n, 0) / nOther).toFixed(1)
+export const PARTY_OTHER = {
+  label: '其它政黨支持者',
+  n: nOther,
+  pct: { chiang: wavg('chiang'), chen: wavg('chen'), huang: wavg('huang'), und: wavg('und') },
+  parts: otherParts
+}
+
 // 「佔全體未表態者的比例」＝該群體未表態人數 ÷ 全體未表態人數
 export const swing = r => (r.pct.und * r.n) / (OVERALL.und * N) * 100
 

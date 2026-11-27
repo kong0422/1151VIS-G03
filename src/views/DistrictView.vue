@@ -27,24 +27,37 @@ const range = computed(() => {
 })
 const op = v => 0.18 + 0.82 * ((v - range.value[0]) / (range.value[1] - range.value[0] || 1))
 
+// ---- 方塊內 Treemap 與 tooltip 的資料 ----
+const treeOf = (d, src) => KEYS.map(k => ({ key: k, short: CAND[k].short, color: CAND[k].color, value: src[k] }))
+const pollTip = d => ({
+  title: `${d.name}｜民調推估`,
+  sub: `台灣民意基金會 11/5–7，n=${d.n}（95% 信賴區間約 ±${d.moe.toFixed(0)} 點）`,
+  rows: KEYS.map(k => ({ color: CAND[k].color, label: CAND[k].name, value: `${d.pollShare[k].toFixed(1)}%`, extra: `原始 ${d.pollRaw[k].toFixed(1)}%` })),
+  notes: [
+    `未表態 ${d.pollUnd.toFixed(1)}%；已換算為三人合計 100%`,
+    `民調領先：${CAND[d.pollLeader].name}；實際領先：${CAND[d.leader].name}（${d.pollLeader === d.leader ? '相符' : '不符'}）`
+  ]
+})
+const actualTip = d => ({
+  title: `${d.name}｜實際開票`,
+  sub: '三人合計＝100%',
+  rows: KEYS.map(k => ({ color: CAND[k].color, label: CAND[k].name, value: `${d.share[k].toFixed(1)}%`, extra: `${d.votes[k].toLocaleString()} 票` })),
+  notes: [`領先：${CAND[d.leader].name}，領先第二名 ${d.margin.toFixed(1)} 點`]
+})
+
 const pollCells = computed(() => DISTRICTS.map(d => mode.value === 'leader' ? {
-  name: d.name, col: d.col, row: d.row, fill: CAND[d.pollLeader].color, opacity: 0.85,
-  flag: d.pollLeader !== d.leader, sub: `領先：${CAND[d.pollLeader].short} ${d.pollShare[d.pollLeader].toFixed(0)}%`,
-  label: `民調領先：${CAND[d.pollLeader].name}；實際領先：${CAND[d.leader].name}（民調 n=${d.n}）`
+  name: d.name, col: d.col, row: d.row, flag: d.pollLeader !== d.leader,
+  tree: treeOf(d, d.pollShare), leaderColor: CAND[d.pollLeader].color, tip: pollTip(d)
 } : {
   name: d.name, col: d.col, row: d.row, fill: CAND[mode.value].color, opacity: op(d.pollShare[mode.value]),
-  flag: false, sub: `${d.pollShare[mode.value].toFixed(1)}%`,
-  label: `民調推估 ${CAND[mode.value].name} ${d.pollShare[mode.value].toFixed(1)}%（n=${d.n}）`
+  flag: false, sub: `${d.pollShare[mode.value].toFixed(1)}%`, tip: pollTip(d)
 }))
 const actualCells = computed(() => DISTRICTS.map(d => mode.value === 'leader' ? {
-  name: d.name, col: d.col, row: d.row, fill: CAND[d.leader].color,
-  opacity: 0.4 + 0.6 * Math.min(d.margin / 20, 1), flag: false,
-  sub: `${CAND[d.leader].short} ${d.share[d.leader].toFixed(1)}%`,
-  label: `實際領先：${CAND[d.leader].name} ${d.share[d.leader].toFixed(1)}%，領先 ${d.margin.toFixed(1)} 點`
+  name: d.name, col: d.col, row: d.row, flag: false,
+  tree: treeOf(d, d.share), leaderColor: CAND[d.leader].color, tip: actualTip(d)
 } : {
   name: d.name, col: d.col, row: d.row, fill: CAND[mode.value].color, opacity: op(d.share[mode.value]),
-  flag: false, sub: `${d.share[mode.value].toFixed(1)}%`,
-  label: `實際 ${CAND[mode.value].name} ${d.share[mode.value].toFixed(1)}%`
+  flag: false, sub: `${d.share[mode.value].toFixed(1)}%`, tip: actualTip(d)
 }))
 
 const hit = computed(() => DISTRICTS.filter(d => d.pollLeader === d.leader).length)
@@ -70,18 +83,16 @@ const f = v => (v > 0 ? '+' : '') + v.toFixed(1)
 
     <section class="card">
       <h2>雙圖並列：民調推估 vs 實際開票</h2>
-      <p class="sub">{{ geo ? '' : '目前為示意方塊圖（位置大致依地理方位排列，非真實邊界）。' }}切換下方選項可改看各候選人的得票率分佈。</p>
+      <p class="sub">{{ geo ? '' : '目前為示意方塊圖（位置大致依地理方位排列，非真實邊界）。' }}切換下方選項可改看各候選人的得票率分佈；滑鼠移到方塊上可看詳細數字。</p>
       <div class="tabs"><button v-for="m in modes" :key="m.k" :class="{ on: mode === m.k }" @click="mode = m.k">{{ m.t }}</button></div>
-      <div class="legend"><span v-for="k in KEYS" :key="k"><i></i>{{ CAND[k].name }}</span></div>
+      <div class="legend"><span v-for="k in KEYS" :key="k"><i :style="{ background: CAND[k].color }"></i>{{ CAND[k].name }}</span></div>
       <div v-if="mode !== 'leader'" class="scale">
         <span>{{ CAND[mode].short }} 得票率　低 {{ range[0].toFixed(1) }}%</span>
         <span class="scale-bar" :style="{ background: CAND[mode].color, '--from': 0.18 }"></span>
         <span>高 {{ range[1].toFixed(1) }}%（兩張圖共用同一色階）</span>
       </div>
       <div v-else class="scale">
-        <span>右圖領先幅度　小</span>
-        <span v-for="k in KEYS" :key="k" class="scale-bar" :style="{ background: CAND[k].color, '--from': 0.4 }"></span>
-        <span>大（20 點以上）；左圖深淺固定</span>
+        <span>方塊內 Treemap：面積＝三位候選人的得票比例；方塊邊框色＝該區領先者；橘色虛線＝民調領先者與實際不同</span>
       </div>
       <div class="maps">
         <figure><figcaption>民調推估（TPOF，三人合計＝100%）</figcaption><DistrictMap :cells="pollCells" :geo="geo" /></figure>

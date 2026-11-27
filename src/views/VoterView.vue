@@ -1,6 +1,6 @@
 <script setup>
 import { ref, computed } from 'vue'
-import { DIMS, OVERALL, N, swing } from '../data/voters'
+import { DIMS, OVERALL, N, swing, PARTY_OTHER } from '../data/voters'
 import Stacked100 from '../components/Stacked100.vue'
 import Heatmap from '../components/Heatmap.vue'
 import SwingBars from '../components/SwingBars.vue'
@@ -10,7 +10,17 @@ const isDev = import.meta.env.DEV
 const title = '選民結構交叉分析與「潛在動搖票」定位'
 const dimKey = ref('age')
 const dim = computed(() => DIMS.find(d => d.key === dimKey.value))
-const swingRows = computed(() => dim.value.rows.map(r => ({ label: r.label, n: r.n, und: r.pct.und, contrib: swing(r) })))
+const swingRows = computed(() => {
+  const rows = dim.value.rows.map(r => ({ label: r.label, n: r.n, und: r.pct.und, contrib: swing(r), detail: null }))
+  // 政黨傾向：把樣本過少的分類歸併為「其它政黨支持者」，各類明細放在 tooltip
+  if (dim.value.key === 'party') {
+    rows.push({
+      label: PARTY_OTHER.label, n: PARTY_OTHER.n, und: PARTY_OTHER.pct.und, contrib: swing(PARTY_OTHER),
+      detail: PARTY_OTHER.parts.map(p => ({ label: p.label, n: p.n, und: p.pct.und, contrib: swing(p) }))
+    })
+  }
+  return rows
+})
 const heatGroups = DIMS.map(d => ({ label: d.label, rows: d.rows }))
 
 const party = DIMS.find(d => d.key === 'party').rows
@@ -42,7 +52,7 @@ const youngTop = DIMS.find(d => d.key === 'age').rows.filter(r => r.n >= 100).so
 
     <section class="card">
       <h2>潛在動搖票定位：誰貢獻了最多的未表態者？</h2>
-      <p class="sub">目前分類：{{ dim.label }}（可用上方「百分比堆疊長條圖」的分頁切換）。長度＝佔全體未表態者的比例。</p>
+      <p class="sub">目前分類：{{ dim.label }}（可用上方「百分比堆疊長條圖」的分頁切換）。長度＝佔全體未表態者的比例；滑鼠移到長條上可看明細。<span v-if="dim.key === 'party'">「其它政黨支持者」包含台灣基進、親民黨、其他政黨，以及政黨傾向回答「不知道」者（共 {{ PARTY_OTHER.n }} 人，各類樣本都不到 25 人）。</span></p>
       <SwingBars :rows="swingRows" />
     </section>
 
