@@ -29,9 +29,11 @@ function draw() {
     return
   }
   shown.forEach(s => {
-    const pts = TREND_X.map((t, i) => ({ t, v: s.y[i] })).filter(p => p.v != null)
+    const all = TREND_X.map((t, i) => ({ t, v: s.y[i] }))
+    const pts = all.filter(p => p.v != null)
     const g = svg.append('g')
-    g.append('path').attr('d', d3.line().x(d => x(d.t)).y(d => y(d.v))(pts)).attr('fill', 'none')
+    // 缺值處斷線（不內插），只畫相鄰、都有數字的線段
+    g.append('path').attr('d', d3.line().defined(d => d.v != null).x(d => x(d.t)).y(d => y(d.v))(all)).attr('fill', 'none')
       .attr('stroke', s.color).attr('stroke-width', 2.5).attr('stroke-dasharray', s.dash)
     pts.forEach(p => {
       g.append('circle').attr('cx', x(p.t)).attr('cy', y(p.v)).attr('r', 5).attr('fill', s.color)

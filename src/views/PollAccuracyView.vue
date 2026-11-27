@@ -61,6 +61,7 @@ const actualText = KEYS.map(k => `${CAND[k].short} ${ACTUAL[k]}%`).join('、')
 
     <section class="card scroll">
       <h2>誤差排名</h2>
+      <p class="sub">依平均絕對誤差（MAE）由小到大排序；目前口徑：{{ mode === 'norm' ? '排除未表態（三人合計＝100%）' : '原始民調數字（含未表態）' }}。</p>
       <table>
         <thead>
           <tr>

@@ -69,10 +69,20 @@ const f = v => (v > 0 ? '+' : '') + v.toFixed(1)
     </section>
 
     <section class="card">
-      <h2>民調推估 vs 實際開票</h2>
+      <h2>雙圖並列：民調推估 vs 實際開票</h2>
       <p class="sub">{{ geo ? '' : '目前為示意方塊圖（位置大致依地理方位排列，非真實邊界）。' }}切換下方選項可改看各候選人的得票率分佈。</p>
       <div class="tabs"><button v-for="m in modes" :key="m.k" :class="{ on: mode === m.k }" @click="mode = m.k">{{ m.t }}</button></div>
-      <div class="legend"><span v-for="k in KEYS" :key="k"><i :style="{ background: CAND[k].color }"></i>{{ CAND[k].name }}</span></div>
+      <div class="legend"><span v-for="k in KEYS" :key="k"><i></i>{{ CAND[k].name }}</span></div>
+      <div v-if="mode !== 'leader'" class="scale">
+        <span>{{ CAND[mode].short }} 得票率　低 {{ range[0].toFixed(1) }}%</span>
+        <span class="scale-bar" :style="{ background: CAND[mode].color, '--from': 0.18 }"></span>
+        <span>高 {{ range[1].toFixed(1) }}%（兩張圖共用同一色階）</span>
+      </div>
+      <div v-else class="scale">
+        <span>右圖領先幅度　小</span>
+        <span v-for="k in KEYS" :key="k" class="scale-bar" :style="{ background: CAND[k].color, '--from': 0.4 }"></span>
+        <span>大（20 點以上）；左圖深淺固定</span>
+      </div>
       <div class="maps">
         <figure><figcaption>民調推估（TPOF，三人合計＝100%）</figcaption><DistrictMap :cells="pollCells" :geo="geo" /></figure>
         <figure><figcaption>實際開票（三人合計＝100%）</figcaption><DistrictMap :cells="actualCells" :geo="geo" /></figure>
