@@ -54,16 +54,6 @@ GitHub 專案：[https://github.com/kong0422/1151VIS-G03](https://github.com/kon
 - 淺色／深色模式自動切換；版面可隨螢幕寬度調整。
 - 候選人色彩：蔣萬安（國民黨）藍、陳時中（民進黨）綠、黃珊珊（無黨籍）黃；誤差方向用橘色與另一組藍色，避免與候選人混淆。
 
-### 如何執行
-
-```bash
-npm install
-npm run dev       # 開發伺服器
-npm run build     # 打包到 dist/
-npm run preview   # 預覽打包結果
-```
-
-需要 Node.js 18 以上。
 
 ## 資料整理與製作過程
 
