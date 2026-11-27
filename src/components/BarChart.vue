@@ -1,14 +1,37 @@
 <script setup>
 import { ref, watch, onMounted } from 'vue'
 import * as d3 from 'd3'
+import { useTip } from '../utils/useTip'
+import ChartTip from './ChartTip.vue'
 import { KEYS, CAND, ACTUAL } from '../data/polls'
+import { fmt } from '../utils/stats'
 
 const props = defineProps({ rows: { type: Array, required: true } })
 const el = ref(null)
+const wrap = ref(null)
+const { tip, show, hide } = useTip(wrap)
+
+function tipOf(k, s, v) {
+  if (s.actual) return {
+    title: CAND[k].name, sub: '實際開票',
+    rows: [{ color: CAND[k].color, label: '實際得票率', value: `${v.toFixed(2)}%` }],
+    notes: ['三人合計 99.36%，其餘為其他候選人']
+  }
+  const err = v - ACTUAL[k]
+  return {
+    title: `${s.r.name}｜${CAND[k].name}`, sub: `訪問／公布：${s.r.field}`,
+    rows: [
+      { color: CAND[k].color, label: '民調', value: `${v.toFixed(2)}%` },
+      { label: '實際開票', value: `${ACTUAL[k]}%` },
+      { label: '誤差', value: `${fmt(err)} pp`, extra: err > 0 ? '高估' : '低估', bold: true }
+    ]
+  }
+}
 
 function draw() {
   const svg = d3.select(el.value)
   svg.selectAll('*').remove()
+  hide()
   const W = 920, H = 430, m = { t: 16, r: 10, b: 118, l: 42 }
   svg.attr('viewBox', `0 0 ${W} ${H}`)
   const series = [...props.rows.map(r => ({ k: r.short, r })), { k: '實際開票', actual: true }]
@@ -29,7 +52,9 @@ function draw() {
       g.append('rect').attr('x', bx).attr('y', y(v)).attr('width', bw).attr('height', y(0) - y(v))
         .attr('rx', 2).attr('fill', CAND[k].color).attr('opacity', s.actual ? 1 : 0.5)
         .attr('stroke', s.actual ? 'var(--fg)' : 'none').attr('stroke-width', 1.5)
-        .append('title').text(`${CAND[k].name}\n${s.actual ? '實際得票率' : s.k}：${v.toFixed(2)}%`)
+        .on('pointerenter', function (ev) { d3.select(this).attr('stroke', 'var(--fg)').attr('stroke-width', 2.5); show(ev, tipOf(k, s, v)) })
+        .on('pointermove', ev => show(ev, tipOf(k, s, v)))
+        .on('pointerleave', function () { d3.select(this).attr('stroke', s.actual ? 'var(--fg)' : 'none').attr('stroke-width', 1.5); hide() })
       g.append('text').attr('x', bx + bw / 2).attr('y', y(v) - 4).attr('text-anchor', 'middle')
         .style('font-size', '10px').text(v.toFixed(1))
       g.append('text').attr('transform', `translate(${bx + bw / 2},${H - m.b + 12}) rotate(55)`)
@@ -45,5 +70,8 @@ watch(() => props.rows, draw)
 </script>
 
 <template>
-  <svg ref="el" role="img" aria-label="各家民調與實際開票分組長條圖"></svg>
+  <div ref="wrap" class="chart-wrap">
+    <svg ref="el" role="img" aria-label="各家民調與實際開票分組長條圖"></svg>
+    <ChartTip :tip="tip" />
+  </div>
 </template>

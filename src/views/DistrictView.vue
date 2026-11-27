@@ -122,7 +122,7 @@ const f = v => (v > 0 ? '+' : '') + v.toFixed(1)
               <td>{{ d.pollShare[k].toFixed(1) }}%</td><td>{{ d.share[k].toFixed(1) }}%</td>
               <td :class="d.pollShare[k] - d.share[k] > 0 ? 'pos' : 'neg'">{{ f(d.pollShare[k] - d.share[k]) }}</td>
             </template>
-            <td><span class="chip" :class="[d.pollLeader, { miss: d.pollLeader !== d.leader }]" :title="d.pollLeader !== d.leader ? '民調領先者與實際不同' : ''">{{ CAND[d.pollLeader].short }}</span></td>
+            <td><span class="chip" :class="[d.pollLeader, { miss: d.pollLeader !== d.leader }]" :data-tip="d.pollLeader !== d.leader ? '民調領先者與實際不同' : null">{{ CAND[d.pollLeader].short }}</span></td>
             <td><span class="chip" :class="d.leader">{{ CAND[d.leader].short }}</span></td>
           </tr>
         </tbody>

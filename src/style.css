@@ -1,4 +1,4 @@
-:root{--bg:#fafaf8;--card:#fff;--fg:#1f2328;--mute:#6b7280;--line:#e5e7eb;--band:rgba(120,120,120,.10);--c1:#2b62c9;--c2:#2f9e57;--c3:#d9a400;--bad:#ff0000;--neg:#2563eb;color-scheme:light}
+:root{--bg:#fafaf8;--card:#fff;--fg:#1f2328;--mute:#6b7280;--line:#e5e7eb;--band:rgba(120,120,120,.10);--c1:#2b62c9;--c2:#2f9e57;--c3:#d9a400;--bad:#c2410c;--neg:#2563eb;color-scheme:light}
 @media (prefers-color-scheme:dark){:root{--bg:#15171a;--card:#1e2126;--fg:#e8eaed;--mute:#9aa0a6;--line:#33373d;--band:rgba(200,200,200,.10);--c1:#6c97ee;--c2:#4cc47a;--c3:#f2c94c;--bad:#fb923c;--neg:#7aa2f7;color-scheme:dark}}
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.65 "Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif}
@@ -90,3 +90,30 @@ main{width:85%;flex:1}
 .map-tip td.e{text-align:right;color:var(--mute)}
 .map-tip i{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:5px}
 .map-tip .n{margin-top:3px;color:var(--mute);white-space:normal}
+
+/* ===== 族群堆疊圖 tooltip ===== */
+.stack-wrap{position:relative}
+.stack-tip{position:absolute;z-index:5;pointer-events:none;width:250px;background:var(--card);color:var(--fg);border:1px solid var(--line);border-radius:8px;padding:8px 10px;font-size:12px;line-height:1.5;box-shadow:0 4px 14px rgba(0,0,0,.18)}
+.stack-tip b{display:block}
+.stack-tip table{min-width:0;width:100%;margin-top:4px;font-size:12px}
+.stack-tip td{padding:2px 4px;white-space:nowrap;border-bottom:0}
+.stack-tip td.v{text-align:right}
+.stack-tip tr.on td{font-weight:700}
+.stack-tip i{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:5px}
+.stack-tip .n{margin-top:3px;color:var(--mute)}
+
+/* ===== 共用圖表 tooltip（取代瀏覽器預設提示） ===== */
+.chart-wrap{position:relative}
+.chart-tip{position:absolute;z-index:5;pointer-events:none;width:260px;background:var(--card);color:var(--fg);border:1px solid var(--line);border-radius:8px;padding:8px 10px;font-size:12px;line-height:1.5;box-shadow:0 4px 14px rgba(0,0,0,.18)}
+.chart-tip b{display:block}
+.chart-tip .muted{color:var(--mute);margin-bottom:2px}
+.chart-tip table{min-width:0;width:100%;margin-top:4px;font-size:12px}
+.chart-tip td{padding:2px 4px;white-space:nowrap;border-bottom:0}
+.chart-tip td.v{text-align:right}
+.chart-tip td.e{text-align:right;color:var(--mute)}
+.chart-tip tr.on td{font-weight:700}
+.chart-tip i{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:5px}
+.chart-tip .n{margin-top:3px;color:var(--mute);white-space:normal}
+/* 表格內標籤的 tooltip */
+.chip[data-tip]{position:relative;cursor:help}
+.chip[data-tip]:hover::after{content:attr(data-tip);position:absolute;left:50%;top:calc(100% + 6px);transform:translateX(-50%);white-space:nowrap;background:var(--card);color:var(--fg);border:1px solid var(--line);border-radius:6px;padding:3px 8px;font-size:12px;font-weight:400;box-shadow:0 4px 14px rgba(0,0,0,.18);z-index:5}
